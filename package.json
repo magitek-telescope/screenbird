@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "dotenv": "^2.0.0",
     "electron-oauth-twitter": "^1.0.1",
     "node-twitter": "^0.5.3",
     "oauth": "^0.9.14",

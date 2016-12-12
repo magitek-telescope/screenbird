@@ -9,22 +9,34 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        cursor: crosshair;
-        font-family: Lato
+        font-family: Lato;
+        overflow: hidden;
       }
 
       #app{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      #cover{
         width: 100%;
         height: 100%;
         background: rgba(0,0,0,0.2);
         display: flex;
         align-items: center;
         justify-content: center;
+        cursor: crosshair;
+
+        position: absolute;
+        left: 0;
+        top: 0;
       }
 
       video{
-        width: 1440px;
-        height:900px;
         opacity: 0.0;
 
         position: absolute;
@@ -51,28 +63,116 @@
         top: 0;
       }
 
-      #app.busy{
+      #cover.busy{
         opacity: 0.0;
         background: transparent;
+      }
+
+      #cover.shi{
+        pointer-events: none;
+      }
+
+      .tweet-modal{
+        width: 340px;
+        height: 200px;
+        display: flex;
+        padding: 10px;
+        background: #fff;
+        z-index: 10000;
+        opacity: 0.0;
+        pointer-events: none;
+        transition: all 0.3s ease-out;
+        transform: translate(0, -30px);
+      }
+
+      .tweet-modal.show{
+        opacity: 1.0;
+        pointer-events: auto;
+        transform: translate(0, 0px);
+        box-shadow: 0 0 3px rgba(0,0,0,0.16);
+      }
+
+      .tweet-modal canvas{
+        width: 80px;
+        height: 80px;
+        background-color: #f5f5f5;
+      }
+
+      .tweet-modal .modal-form{
+        padding-left: 10px;
+        width: 250px;
+      }
+
+      .modal-form textarea{
+        font-size: 12px;
+
+        width: calc(100% - 20px);
+        margin: 0;
+        height: 140px;
+        padding: 10px;
+        border: none;
+        background: #F5F5F5;
+        outline: none;
+      }
+
+      .modal-form .buttons{
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .buttons .button{
+        width: 70px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        border: none;
+        margin-top: 10px;
+        margin-left: 10px;
+
+        font-weight: bold;
+        font-size: 12px;
+
+        cursor: pointer;
+      }
+
+      .buttons .button-submit{
+        background: #40AFFF;
+      }
+
+      .buttons .button-cancel{
+        background: #CCCCCC;
       }
     </style>
   </head>
   <body>
-    <div id="app"
-      :class="appClass()"
-      v-on:mousedown="mousedown" v-on:mousemove="mousemove" v-on:mouseup="mouseup"
-    >
+    <div id="app">
       <div class="selector" v-show="isDragging" :style="getSelectorCSS"></div>
       <ul class="ruler" v-show="isDragging" :style="getRulerCSS">
         <li class="ruler-x">{{ getRulerX }}</li>
         <li class="ruler-y">{{ getRulerY }}</li>
       </ul>
       <video></video>
-      <canvas width="100" height="100"></canvas>
+
+      <form :class="{ 'tweet-modal' : true, 'show' : isTweetMode}">
+        <canvas width="100" height="100"></canvas>
+        <div class="modal-form">
+          <textarea name="name" v-model="status"></textarea>
+          <div class="buttons">
+            <button class="button button-submit" v-on:click.prevent="executeTweet">Tweet</button>
+            <button class="button button-cancel" v-on:click.prevent="exit">Cancel</button>
+          </div>
+        </div>
+      </form>
+
+      <div id="cover" v-show="isSetOauth" :class="appClass()" v-on:mousedown="mousedown" v-on:mousemove="mousemove" v-on:mouseup="mouseup"></div>
     </div>
   </body>
 
   <script>
-require('./renderer.js')
-</script>
+    require('./src/renderer/main.js');
+  </script>
 </html>
