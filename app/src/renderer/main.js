@@ -134,8 +134,8 @@ new Vue({
 
     postProcessing(data, message){
       console.log(data);
-      new Notification("Gyazotter", {
-        title: "Gyazotter",
+      new Notification("screenbird", {
+        title: "screenbird",
         body: message
       });
 
@@ -201,7 +201,7 @@ new Vue({
       })
       .then((data)=>{
         Service.Logger.log(1, "red", "ツイート完了");
-        this.postProcessing(data, "アップロードが完了しました。");
+        this.postProcessing(data, "Success upload.");
       })
       .catch((err)=>{
         Service.Logger.log(1, "red", "ツイート失敗");

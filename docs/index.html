@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="favicon.png">
+  <title>screenbird - The fastest desktop capture post tool for Twitter.</title>
+  <style>
+  html, body{
+    margin: 0;
+    padding: 0;
+    font-family: Lato, Hiragino Sans;
+    color: #999;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  html{
+    width: 100%;
+    height: 100%;
+  }
+
+  body{
+    width: 100%;
+    height: 100%;
+    background: #fff;
+  }
+
+  main{
+    width: 100%;
+    min-height: calc(100vh - 30px);
+    background: #fff;
+    text-align: center;
+  }
+
+  header{
+    position: relative;
+    width: 100%;
+    padding: 20px 0;
+
+    background: url("./background.png");
+    background-position: top center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    color: #fff;
+  }
+
+  h1{
+    margin: 0;
+    padding: 0;
+  }
+
+  .tagline{
+    margin: 15px 0 25px;
+  }
+
+  footer{
+    width: 100%;
+    height: 30px;
+    color: #999;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 12px;
+  }
+
+  footer a{
+    color: #999;
+
+    margin: 0;
+    padding: 0;
+  }
+
+  a.button{
+    width: 180px;
+    height: 40px;
+
+    color: #fff;
+    background: #4CC093;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 600;
+
+    text-decoration: none;
+    margin: 10px auto 10px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease-out;
+
+    background: linear-gradient(#4CC093, #359B75);
+    border: solid 1px #2C8D69;
+    border-radius: 3px;
+  }
+
+  a.button:hover{
+    box-shadow: 0 0px 4px rgba(0,0,0,0.2);
+  }
+
+  .steps{
+    width: 1150px;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    list-style: none;
+  }
+
+  .step .step-text{
+    font-size: 14px;
+    color: #999;
+  }
+
+  .step-image{
+    max-width: calc(30vw);
+    margin: 10px;
+  }
+
+  .content-description{
+    font-size: 20px;
+    padding: 30px 0;
+    margin: 0;
+  }
+
+  .buy-modal{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    opacity: 0.0;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease-out;
+  }
+
+  .buy-modal.active{
+    opacity: 1.0;
+    pointer-events: auto;
+  }
+
+  .buy-modal-body{
+    transform: translateY(80vh);
+    transition: all 0.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+
+  .active .buy-modal-body{
+    transform: translateY(0vh);
+  }
+
+  .buy-modal-background{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+
+    content: "";
+
+    top: 0;
+    left: 0;
+
+    z-index: 1;
+  }
+
+  .buy-modal-body{
+    z-index: 10000;
+    margin: 30px auto;
+
+    width: 510px;
+  }
+
+  .content{
+    width: 100%;
+  }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img src="icon.png" alt="screenbird-icon" width="150" class="logo">
+      <h1><span class="appname">screenbird</span></h1>
+      <p class="tagline">The fastest desktop capture post tool for Twitter.</p>
+      <a href="#" class="button download-button" target="_blank">Download for macOS</a>
+    </header>
+
+    <div class="content">
+      <p class="content-description">High speed tweet with 3 steps 10 seconds.</p>
+      <ol class="steps">
+        <li class="step">
+          <img class="step-image" src="screenshot_01.png" alt="" width="350">
+          <p class="step-text">1. Launch screenbird and select rectangle.</p>
+        </li>
+
+        <li class="step">
+          <img class="step-image" src="screenshot_02.png" alt="" width="350">
+          <p class="step-text">2. Enter the body text.</p>
+        </li>
+
+        <li class="step">
+          <img class="step-image" src="screenshot_03.png" alt="" width="350">
+          <p class="step-text">3. Tweet is complete.</p>
+        </li>
+      </ol>
+    </div>
+
+    <div class="buy-modal">
+      <div class="buy-modal-background"></div>
+      <div class="buy-modal-body">
+        <script src="https://gumroad.com/js/gumroad-embed.js"></script>
+        <div class="gumroad-product-embed" data-gumroad-product-id="aevWG"><a href="https://gumroad.com/l/aevWG">ローディング中・・・</a></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    created by <a href="https://twitter.com/potato4d" target="_blank">@potato4d</a>
+  </footer>
+
+  <script>
+    var $ = function(e){
+      return document.querySelector(e);
+    }
+
+    $(".download-button").addEventListener("click", function(e){
+      e.preventDefault();
+      $(".buy-modal").classList.add("active");
+      return false;
+    });
+
+    $(".buy-modal-background").addEventListener("click", function(e){
+      $(".buy-modal").classList.remove("active");
+    });
+  </script>
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-63818166-14', 'auto');
+    ga('send', 'pageview');
+  </script>
+</body>
+</html>

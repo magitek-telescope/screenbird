@@ -1,18 +1,19 @@
 {
   "name": "screenbird",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "The screen capture tool to Twitter that can be taken in 3 seconds.",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/potato4d/gyazotter",
+  "repository": "https://github.com/potato4d/screenbird",
   "author": "Potato4d(TAKUMA Hanatani)",
   "license": "MIT",
   "devDependencies": {
     "electron": "^1.4.1"
   },
   "dependencies": {
+    "about-window": "^1.6.1",
     "axios": "^0.15.3",
     "dotenv": "^2.0.0",
     "electron-oauth-twitter": "^1.0.1",

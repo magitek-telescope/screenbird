@@ -25,7 +25,7 @@ function createWindow () {
     {
       x: 0,
       y: 0,
-      width: 500,
+      width: size.width,
       height: size.height,
       frame: false,
       show: true,
@@ -68,8 +68,14 @@ app.on('ready', function(){
         {
           label: 'About ScreenBird',
           click: function(){
-            const dialog = electron.dialog
-            dialog.showErrorBox("About ScreenBird", "version: 1.0.0")
+            const openAboutWindow = require("about-window").default;
+            openAboutWindow(
+              {
+                package_json_dir : path.join(__dirname, 'package.json'),
+                icon_path        : path.join(__dirname, 'icon.png'),
+                description      : "The screen capture tool to Twitter like Gyazo."
+              }
+            );
           }
         },
         {
