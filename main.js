@@ -3,6 +3,7 @@ require('dotenv').config()
 const electron = require('electron')
 // Module to control application life.
 const app = electron.app
+const Menu = electron.Menu
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
@@ -18,13 +19,13 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   const screen = electron.screen;
-  const size = screen.getPrimaryDisplay().workAreaSize;
+  const size = screen.getPrimaryDisplay().size;
 
   mainWindow = new BrowserWindow(
     {
       x: 0,
       y: 0,
-      width: size.width,
+      width: 500,
       height: size.height,
       frame: false,
       show: true,
@@ -59,7 +60,74 @@ function createWindow () {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function(){
+  const menu = Menu.buildFromTemplate(
+    [{
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'About ScreenBird',
+          click: function(){
+            const dialog = electron.dialog
+            dialog.showErrorBox("About ScreenBird", "version: 1.0.0")
+          }
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Undo',
+          accelerator: 'CmdOrCtrl+Z',
+          role: 'undo'
+        },
+        {
+          label: 'Redo',
+          accelerator: 'Shift+CmdOrCtrl+Z',
+          role: 'redo'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          label: 'Cut',
+          accelerator: 'CmdOrCtrl+X',
+          role: 'cut'
+        },
+        {
+          label: 'Copy',
+          accelerator: 'CmdOrCtrl+C',
+          role: 'copy'
+        },
+        {
+          label: 'Paste',
+          accelerator: 'CmdOrCtrl+V',
+          role: 'paste'
+        },
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          role: 'selectall'
+        },
+        {
+          label: 'Debug',
+          accelerator: 'Command+Option+I',
+          click: function () {
+            mainWindow.openDevTools()
+          }
+        },
+        {
+          label: 'Quit',
+          accelerator: 'Command+Q',
+          click: function () {
+            app.quit()
+          }
+        }
+      ]
+    }]
+  )
+  Menu.setApplicationMenu(menu)
+  createWindow()
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

@@ -13,6 +13,7 @@ const Service = {
 
 new Vue({
   el: "#app",
+	template: $("#app-component").innerText,
   data: ()=>{
     return {
       status: "",
@@ -68,6 +69,10 @@ new Vue({
     getSelectorCSS(){
       return this.selector.css;
     },
+
+    textcount(){
+      return (128 - this.status.length);
+    }
   },
   methods: {
 
@@ -77,7 +82,7 @@ new Vue({
 
     mousedown(e){
       if(this.isGeneratingImage) return;
-      console.log("start");
+      Service.Logger.log("start");
 
       this.selector.pos.start = {x: e.clientX, y: e.clientY};
       this.selector.pos.end = this.selector.pos.start;
@@ -110,8 +115,8 @@ new Vue({
       };
 
       this.ruler.pos = {
-        x: e.clientX,
-        y: e.clientY
+        x: e.clientX - this.selector.pos.start.x,
+        y: e.clientY - this.selector.pos.start.y
       };
     },
 
@@ -162,7 +167,7 @@ new Vue({
           client.post(
             "media/upload",
             {
-              media_data: canvas.toDataURL("image/jpeg").replace(/data:image\/jpeg;base64,/g, "")
+              media_data: canvas.toDataURL("image/png").replace(/data:image\/png;base64,/g, "")
             },
             (err, tweets, response)=>{
               if(err){
@@ -181,7 +186,7 @@ new Vue({
           client.post(
             "statuses/update",
             {
-              status: this.status,
+              status: `${this.status} #screenbird`,
               media_ids: data.media_id_string
             },
             (err, tweets, response)=>{
@@ -219,19 +224,21 @@ new Vue({
         const electron = require("electron");
         const canvas = $("canvas");
 
-        canvas.setAttribute("width" , (this.capture.pos.end.x - this.capture.pos.start.x));
-        canvas.setAttribute("height", (this.capture.pos.end.y - this.capture.pos.start.y));
+        canvas.setAttribute("width" , (this.capture.pos.end.x - this.capture.pos.start.x) * window.devicePixelRatio);
+        canvas.setAttribute("height", (this.capture.pos.end.y - this.capture.pos.start.y) * window.devicePixelRatio);
         const ctx = canvas.getContext("2d");
-
-        console.log(size);
 
         ctx.drawImage(
           $("video"),
-          -this.capture.pos.start.x,
-          -this.capture.pos.start.y-23,
-          size.width,
-          size.height
+          (-this.capture.pos.start.x    ) * window.devicePixelRatio,
+          (-this.capture.pos.start.y-23 ) * window.devicePixelRatio,
+          size.width  * window.devicePixelRatio,
+          size.height * window.devicePixelRatio
         );
+
+        ctx.globalCompositeOperation = "destination-out";
+        ctx.fillStyle = "rgba(255,255,255,0.1)";
+        ctx.fillRect(0,0,1,1);
 
         Service.Logger.log(1, "orange", "ツイート用画像生成完了");
       }, 500);
@@ -250,16 +257,17 @@ new Vue({
           video: {
             mandatory: {
               chromeMediaSource: 'screen',
-              minWidth: size.width,
-              maxWidth: size.width,
-              minHeight: size.height,
-              maxHeight: size.height
+              minWidth: size.width * window.devicePixelRatio,
+              maxWidth: size.width * window.devicePixelRatio,
+              minHeight: size.height * window.devicePixelRatio,
+              maxHeight: size.height * window.devicePixelRatio
             }
           }
         },
         this.generateImage,
         (e)=>{
           console.log(e);
+          alert("キャプチャの実行時に問題が発生しました。");
         }
       )
     },

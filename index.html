@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Hello World!</title>
+    <title>screenbird</title>
+    <!-- <link rel="stylesheet" href=""> -->
     <style>
       html,body{
         width: 100%;
@@ -51,6 +52,8 @@
         position: absolute;
         left: 0;
         top: 0;
+
+        background: rgba(0, 0 , 0, 0.4);
       }
 
       .ruler{
@@ -101,6 +104,7 @@
       .tweet-modal .modal-form{
         padding-left: 10px;
         width: 250px;
+        position: relative;
       }
 
       .modal-form textarea{
@@ -113,6 +117,8 @@
         border: none;
         background: #F5F5F5;
         outline: none;
+
+        resize: none;
       }
 
       .modal-form .buttons{
@@ -137,6 +143,7 @@
         font-size: 12px;
 
         cursor: pointer;
+        outline: none;
       }
 
       .buttons .button-submit{
@@ -146,30 +153,49 @@
       .buttons .button-cancel{
         background: #CCCCCC;
       }
+
+      .form-text-count{
+        position: absolute;
+        top: 135px;
+        right: 10px;
+      }
+
+      .form-text-count-warn{
+        color: #900;
+      }
     </style>
   </head>
   <body>
-    <div id="app">
-      <div class="selector" v-show="isDragging" :style="getSelectorCSS"></div>
-      <ul class="ruler" v-show="isDragging" :style="getRulerCSS">
-        <li class="ruler-x">{{ getRulerX }}</li>
-        <li class="ruler-y">{{ getRulerY }}</li>
-      </ul>
-      <video></video>
+    <script type="text/x-template" id="app-component">
+      <div id="app">
+        <div class="selector" v-show="isDragging" :style="getSelectorCSS"></div>
+        <ul class="ruler" v-show="isDragging" :style="getRulerCSS">
+          <li class="ruler-x">{{ getRulerX }}</li>
+          <li class="ruler-y">{{ getRulerY }}</li>
+        </ul>
+        <video></video>
 
-      <form :class="{ 'tweet-modal' : true, 'show' : isTweetMode}">
-        <canvas width="100" height="100"></canvas>
-        <div class="modal-form">
-          <textarea name="name" v-model="status"></textarea>
-          <div class="buttons">
-            <button class="button button-submit" v-on:click.prevent="executeTweet">Tweet</button>
-            <button class="button button-cancel" v-on:click.prevent="exit">Cancel</button>
+        <form :class="{ 'tweet-modal' : true, 'show' : isTweetMode}">
+          <canvas width="100" height="100"></canvas>
+          <div class="modal-form">
+            <textarea name="name" v-model="status" placeholder="Type here.."></textarea>
+            <span v-bind:class="{'form-text-count': true, 'form-text-count-warn': textcount < 20}">{{ textcount }}</span>
+            <div class="buttons">
+
+              <button class="button button-submit" v-on:click.prevent="executeTweet" v-if="textcount >= 0">Tweet</button>
+              <button class="button button-cancel" v-else>Tweet</button>
+
+              <button class="button button-cancel" v-on:click.prevent="exit">Cancel</button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <div id="cover" v-show="isSetOauth" :class="appClass()" v-on:mousedown="mousedown" v-on:mousemove="mousemove" v-on:mouseup="mouseup"></div>
-    </div>
+        <div id="cover" v-show="isSetOauth" :class="appClass()" v-on:mousedown="mousedown" v-on:mousemove="mousemove" v-on:mouseup="mouseup"></div>
+      </div>
+    </script>
+
+    <div id="app"></div>
+
   </body>
 
   <script>
