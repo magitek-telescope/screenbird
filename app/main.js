@@ -1,4 +1,18 @@
-require('dotenv').config()
+const production = false;
+
+if(production){
+  process.env = Object.assign(
+    Object.create(null),
+    process.env,
+    {
+      TWITTER_KEY    : "",
+      TWITTER_SECRET : "",
+      mode           : "production"
+    }
+  )
+}else{
+  require('dotenv').config()
+}
 
 const electron = require('electron')
 // Module to control application life.
@@ -65,22 +79,22 @@ app.on('ready', function(){
     [{
       label: 'Edit',
       submenu: [
-        {
-          label: 'About ScreenBird',
-          click: function(){
-            const openAboutWindow = require("about-window").default;
-            openAboutWindow(
-              {
-                package_json_dir : path.join(__dirname, 'package.json'),
-                icon_path        : path.join(__dirname, 'icon.png'),
-                description      : "The screen capture tool to Twitter like Gyazo."
-              }
-            );
-          }
-        },
-        {
-          type: 'separator'
-        },
+        // {
+        //   label: 'About ScreenBird',
+        //   click: function(){
+        //     const openAboutWindow = require("about-window").default;
+        //     openAboutWindow(
+        //       {
+        //         package_json_dir : path.join(__dirname, 'package.json'),
+        //         icon_path        : path.join(__dirname, 'icon.png'),
+        //         description      : "The screen capture tool to Twitter like Gyazo."
+        //       }
+        //     );
+        //   }
+        // },
+        // {
+        //   type: 'separator'
+        // },
         {
           label: 'Undo',
           accelerator: 'CmdOrCtrl+Z',

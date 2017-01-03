@@ -4,7 +4,9 @@
   "description": "The screen capture tool to Twitter that can be taken in 3 seconds.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "packaging": "sudo rm -Rf ../dist/ && mkdir ../dist/ && npm-run-all packaging:*",
+    "packaging:mac": "electron-packager . screenbird --out=../dist --platform=darwin --icon=../resources/icon.icns --asar"
   },
   "repository": "https://github.com/potato4d/screenbird",
   "author": "Potato4d(TAKUMA Hanatani)",
@@ -14,7 +16,6 @@
   },
   "dependencies": {
     "about-window": "^1.6.1",
-    "axios": "^0.15.3",
     "dotenv": "^2.0.0",
     "electron-oauth-twitter": "^1.0.1",
     "oauth": "^0.9.14",
