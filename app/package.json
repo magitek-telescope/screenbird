@@ -12,7 +12,8 @@
   "author": "Potato4d(TAKUMA Hanatani)",
   "license": "MIT",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "npm-run-all": "^4.0.0"
   },
   "dependencies": {
     "about-window": "^1.6.1",
