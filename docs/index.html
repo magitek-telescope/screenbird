@@ -24,6 +24,14 @@
     background: #fff;
   }
 
+  .row{
+    width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    text-align: left;
+  }
+
   main{
     width: 100%;
     min-height: calc(100vh - 50px);
@@ -124,6 +132,7 @@
     font-size: 14px;
     color: #999;
     margin-bottom: 30px;
+    text-align: center;
   }
 
   .step-image{
@@ -132,13 +141,14 @@
   }
 
   .content-description{
-    font-size: 20px;
-    padding: 30px 0;
+    font-size: 28px;
+    font-weight: 200;
+    padding: 20px 0 50px;
     margin: 0;
   }
 
   .buy-modal{
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 100%;
@@ -192,6 +202,17 @@
 
   .content{
     width: 100%;
+    padding-top: 30px;
+  }
+
+  textarea{
+    margin: 0 auto;
+    border: solid 1px #0b7cdf;
+    padding: 20px;
+    border-radius: 4px;
+    resize: none;
+    color: #0b7cdf;
+    outline: none;
   }
   </style>
 </head>
@@ -201,12 +222,16 @@
       <img src="icon.png" alt="screenbird-icon" width="150" class="logo">
       <h1><span class="appname">screenbird</span></h1>
       <p class="tagline">The fastest desktop capture post tool for Twitter.</p>
-      <a href="#" class="button download-button" target="_blank">Download for macOS</a>
+      <a href="#" class="button download-button" target="_blank" style="margin-top: 20px;">Download for macOS</a>
     </header>
 
     <div class="content">
-      <p class="content-description">High speed tweet with 3 steps 10 seconds.</p>
-      <ol class="steps">
+      <p class="content-description col-xs-12">High speed tweet with 3 steps 10 seconds.</p>
+    </div>
+
+    <div class="row">
+
+      <ol class="steps col-xs-12">
         <li class="step">
           <img class="step-image" src="screenshot_01.png" alt="" width="350">
           <p class="step-text">1. Launch screenbird and select rectangle.</p>
@@ -232,7 +257,9 @@
       </div>
     </div>
 
-    <a href="https://twitter.com/share" class="twitter-share-button" data-via="potato4d">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    <p style="margin:20px 0 20px;">
+      <a href="https://twitter.com/share" class="twitter-share-button" data-via="potato4d">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </p>
   </main>
 
   <footer>
