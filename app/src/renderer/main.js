@@ -215,12 +215,12 @@ new Vue({
       })
       .then((data)=>{
         Service.Logger.log(1, "red", "ツイート完了");
-        // this.postProcessing(data, "アップロードに成功しました.");
+        this.postProcessing(data, "アップロードに成功しました.");
       })
       .catch((err)=>{
         console.log(err);
         Service.Logger.log(1, "red", "ツイート失敗");
-        // this.postProcessing(err, "アップロードに失敗しました。");
+        this.postProcessing(err, "アップロードに失敗しました。");
       })
     },
 
