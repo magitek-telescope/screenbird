@@ -1,10 +1,24 @@
 // This file is required by the index.html file and will
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
+const production = true;
+
+if(production){
+  process.env = Object.assign(
+    Object.create(null),
+    process.env,
+    {
+      TWITTER_KEY    : "",
+      TWITTER_SECRET : "",
+      mode           : ""
+    }
+  )
+}else{
+  require('dotenv').config()
+}
 
 const $ = e=>document.querySelector(e);
 
-require('dotenv').config();
 const Vue = require("vue/dist/vue.common.js");
 const Service = {
   Logger: require("../services/Logger"),
@@ -201,11 +215,12 @@ new Vue({
       })
       .then((data)=>{
         Service.Logger.log(1, "red", "ツイート完了");
-        this.postProcessing(data, "Success upload.");
+        // this.postProcessing(data, "アップロードに成功しました.");
       })
       .catch((err)=>{
+        console.log(err);
         Service.Logger.log(1, "red", "ツイート失敗");
-        this.postProcessing(err, "アップロードに失敗しました。");
+        // this.postProcessing(err, "アップロードに失敗しました。");
       })
     },
 
